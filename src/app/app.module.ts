@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { PhotosModule } from './photos/photos.module';
 import { AppRoutingModule } from './app.routing.modue';
 import { ErrosModule } from './erros/erros.module';
-import { HomeModule } from './home/home.module';
+//import { HomeModule } from './home/home.module';
 import { CoreModule } from './core/core.module';
 
 @NgModule({
@@ -15,10 +15,10 @@ import { CoreModule } from './core/core.module';
   imports: [
     BrowserModule,
     PhotosModule,
-    AppRoutingModule,
     ErrosModule,
-    HomeModule,
-    CoreModule
+    //HomeModule, foi retirado para fazer o loading lazy
+    CoreModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

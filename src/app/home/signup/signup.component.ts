@@ -8,7 +8,8 @@ import { NewUser } from './new-user';
 import { SignUpService } from './signup.service';
 
 @Component({
-    templateUrl: './signup.component.html'
+    templateUrl: './signup.component.html',
+    providers: [UserNotTakenValidatrService]
 })
 export class SignUpComponent implements OnInit{
 
