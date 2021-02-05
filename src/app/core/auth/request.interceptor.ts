@@ -8,8 +8,7 @@ import { TokenService } from '../token/token.service';
 export class RequestInterceptor implements HttpInterceptor{
 
     constructor(
-        private tokenService: TokenService,
-        private router: Router){}
+        private tokenService: TokenService){}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
@@ -20,10 +19,7 @@ export class RequestInterceptor implements HttpInterceptor{
                     'x-access-token': token
                 }
             });
-        }else{
-            
-        }
-        
+        }        
         return next.handle(req);
     }
 }
