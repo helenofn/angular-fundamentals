@@ -6,9 +6,10 @@ import { VMessageComponent } from '../shared/components/vmessage/vmessage.compon
 import { VMessageModule } from '../shared/components/vmessage/vmessage.module';
 import { RouterModule } from '@angular/router';
 import { SignUpComponent } from './signup/signup.component';
+import { HomeComponent } from './home.component';
 
 @NgModule({
-    declarations:[ SignInComponent, SignUpComponent ],
+    declarations:[ SignInComponent, SignUpComponent, HomeComponent ],
     imports: [
         ReactiveFormsModule, 
         FormsModule,
