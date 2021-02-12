@@ -23,7 +23,7 @@ export class PhotoListComponent implements OnInit {
   ){}
   
   ngOnInit(): void {
-    this.userName = this.activectedRoute.snapshot.params.userName;
+    //this.userName = this.activectedRoute.snapshot.params.userName;
     
     //Foi transferido para o resolver
     /*const userName = this.activectedRoute.snapshot.params.userName;
@@ -31,7 +31,13 @@ export class PhotoListComponent implements OnInit {
       .listFromUser(userName)
       .subscribe(photos => this.photos = photos);*/
 
+    //Se usar a mesma rota o compoennte não é recarregado, o ngInit não é chamado.
+    //Para solucionar a troca de usuário a ser exibido, a gente usa o observable
+    this.activectedRoute.params.subscribe(params => {
+      this.userName = params.userName;
       this.photos = this.activectedRoute.snapshot.data.photos;
+    });
+     
   }
 
 

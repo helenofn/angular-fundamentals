@@ -1,0 +1,4 @@
+.comment-list{
+    height: 50vh;/*Vh para o scroll funcionar, % naõ faria com que ele aparecesse*/
+    overflow-y: auto;
+}
