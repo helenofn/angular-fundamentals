@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AlertService } from 'src/app/shared/components/alert/alert.service';
 import { Photo } from '../photo/photo';
 import { PhotoComment } from '../photo/photo-comment';
 import { PhotoService } from '../photo/photo.service';
@@ -17,7 +18,9 @@ export class PhotoDetailsComponent implements OnInit{
 
     constructor(
         private route: ActivatedRoute,
-        private photoService: PhotoService){}
+        private photoService: PhotoService,
+        private router: Router,
+        private alertService: AlertService){}
 
     ngOnInit(): void {
         this.photoId = this.route.snapshot.params.photoId;
@@ -28,6 +31,19 @@ export class PhotoDetailsComponent implements OnInit{
             .subscribe(photo => this.photo =photo);*/
 
         this.comments$ = this.photoService.getComments(this.photoId);
+    }
+
+    remove(){
+        this.photoService
+            .removePhoto(this.photoId)
+            .subscribe(
+                () => {
+                    this.alertService.success('Photo removed');
+                    this.router.navigate(['/']);
+                },
+                err => {
+                    this.alertService.warning('Could not delete the photo');
+                });
     }
     
 }
