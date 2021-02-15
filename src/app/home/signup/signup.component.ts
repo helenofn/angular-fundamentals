@@ -6,6 +6,7 @@ import { lowerCaseValidator } from 'src/app/shared/validators/lower-case.validat
 import { UserNotTakenValidatrService } from 'src/app/shared/validators/user-not-taken.validator.service';
 import { NewUser } from './new-user';
 import { SignUpService } from './signup.service';
+import { userNamePassword } from './username-password.validator';
 
 @Component({
     templateUrl: './signup.component.html',
@@ -31,18 +32,34 @@ export class SignUpComponent implements OnInit{
             fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
             userName: ['', [Validators.required, /*Validators.pattern(/^[a-z0-9_\-]+$/)*/lowerCaseValidator, Validators.minLength(2), Validators.maxLength(30)], this.userNotTakenValidatorService.checkUserNameTaken()],
             password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(14)]]
+        },{
+            validator: userNamePassword //Fica pendurado no formGroup
         });
+
         this.platformDetectorService.isPlatformBrowser() && this.emailInput.nativeElement.focus();
     }
 
     signup(){
+
+        //Apenas submet se o formulário válido
+        if(this.signupForm.valid && !this.signupForm.pending){
+            const newUser = this.signupForm.getRawValue() as NewUser;
+            this.signUpService
+                .signup(newUser)
+                .subscribe(
+                    () => this.router.navigate(['']),
+                    err => console.log(err)
+                );
+        }
+
+        /*
         const newUser = this.signupForm.getRawValue() as NewUser;
         this.signUpService
             .signup(newUser)
             .subscribe(
                 () => this.router.navigate(['']),
                 err => console.log(err)
-            );
+            );*/
     }
 
 }
