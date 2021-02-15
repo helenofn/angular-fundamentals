@@ -5,8 +5,9 @@ import { catchError, map } from 'rxjs/operators';
 import { Photo } from "./photo";
 import { PhotoComment } from './photo-comment';
 import { PhotoComponent } from './photo.component';
+import { environment } from '../../../environments/environment'
 
-const API = "http://localhost:3000";
+const API = environment.ApiUrl;
 
 @Injectable({providedIn: 'root'})//Para poder ser injetao, root para ser colocado na raiz do projeto e todos os componetes acessaram o mesmo objeto de service
 export class PhotoService {
