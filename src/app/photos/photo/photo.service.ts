@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Photo } from "./photo";
 import { PhotoComment } from './photo-comment';
 import { PhotoComponent } from './photo.component';
@@ -51,5 +53,14 @@ export class PhotoService {
 
     removePhoto(photoId: number){
         return this.http.delete(API + '/photos/' + photoId);
+    }
+
+    like(photoId: number){
+        return this.http
+            .post(API + '/photos/' + photoId + '/like', {}, {observe: 'response'})
+            .pipe(map(res => true))//Se não der erro, a resposta será retornada como true
+            .pipe(catchError(err => {
+                return err.status == '304' ? of(false) : throwError(err);//Caso seja 304 ele retorna o observable do tipo false ("of" cria um observable), caso contrário, continua a propagar o erro.
+            }));
     }
 }
